@@ -1,58 +1,42 @@
-#!/usr/bin/pyhon3
-"""
-Parent class that will inherit
-"""
-import uuid
+#!/usr/bin/env python3
 from datetime import datetime
-from models import storage
+import uuid
+import json
+
+filename = 'storage.json'
 
 
 class BaseModel:
-    """Defines all common attributes/methods
-    """
+    """this is the Base Model for our AirBNB clone """
+
     def __init__(self, *args, **kwargs):
-        """initializes all attributes
-        """
-        if not kwargs:
+        """ Initialize the BaseModel instance. """
+
+        if kwargs is not None and kwargs != {}:
+            for key in kwargs:
+                if key == "created_at":
+                    self.__dict__["created_at"] = datetime.strptime(kwargs["created_at"], "%d/%m/%y %H:%M:%S.%f")
+                elif key == "updated_at":
+                    self.__dict__["updated_at"] = datetime.strptime(kwargs["updated_at"], "%d/%m/%y %H:%M:%S.%f")
+                else:
+                    self.__dict__[key] = kwargs[key]
+        else:
+            self.updated_at = datetime.now()
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
-            self.updated_at = self.created_at
-            storage.new(self)
-        else:
-            f = "%Y-%m-%dT%H:%M:%S.%f"
-            for key, value in kwargs.items():
-                if key == 'created_at' or key == 'updated_at':
-                    value = datetime.strptime(kwargs[key], f)
-                if key != '__class__':
-                    setattr(self, key, value)
+            # TODO: add storage
 
     def __str__(self):
-        """returns class name, id and attribute dictionary
-        """
-        class_name = "[" + self.__class__.__name__ + "]"
-        dct = {k: v for (k, v) in self.__dict__.items() if (not v) is False}
-        return class_name + " (" + self.id + ") " + str(dct)
-
-    def save(self):
-        """updates last update time
-        """
-        self.updated_at = datetime.now()
-        storage.save()
+        """ returns a string format of the class"""
+        return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
 
     def to_dict(self):
-        """creates a new dictionary, adding a key and returning
-        datemtimes converted to strings
-        """
-        new_dict = {}
+        my_dict = self.__dict__.copy()
+        my_dict["__class__"] = type(self).__name__
+        my_dict["created_at"] = my_dict["created_at"].isoformat()
+        my_dict["updated_at"] = my_dict["updated_at"].isoformat()
+        return my_dict
 
-        for key, values in self.__dict__.items():
-            if key == "created_at" or key == "updated_at":
-                new_dict[key] = values.strftime("%Y-%m-%dT%H:%M:%S.%f")
-            else:
-                if not values:
-                    pass
-                else:
-                    new_dict[key] = values
-        new_dict['__class__'] = self.__class__.__name__
+    def save(self):
+        self.updated_at = datetime.now
 
-        return new_dict

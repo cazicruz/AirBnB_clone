@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #!/usr/bin/env python3
 from datetime import datetime
 import uuid
@@ -91,4 +90,3 @@ class BaseModel:
         """Return the print/str representation of the BaseModel instance."""
         classname = self.__class__.__name__
         return "[{}] ({}) {}".format(classname, self.id, self.__dict__)
->>>>>>> 8e84bfe97282ca6645fe2f99dd6180ea9cca9695

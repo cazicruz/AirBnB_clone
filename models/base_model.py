@@ -8,15 +8,13 @@ filename = 'storage.json'
 
 
 class BaseModel:
-    """this is the class BaseModel for our AirBNB clone 
-	which other classes will inherite from """
+    """this is the class BaseModel for our AirBNB clone which other classes will inherite from """
 
     def __init__(self, *args, **kwargs):
         """ Initialize the BaseModel instance. """
 
         if kwargs is not None and kwargs != {}:
-	""" here we assign values to the various keys passed or 
-	not passed with the class """
+	""" here we assign values to the various keys passed or not passed with the class """
             for key in kwargs:
                 if key == "created_at":
                     self.__dict__["created_at"] = datetime.strptime(kwargs["created_at"], "%d/%m/%y %H:%M:%S.%f")

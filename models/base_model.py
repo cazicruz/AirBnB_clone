@@ -29,7 +29,7 @@ class BaseModel:
     def __str__(self):
         """ returns a string format of the class"""
         return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
-        def save(self):
+    def save(self):
         self.updated_at = datetime.now
         storage.save()
 

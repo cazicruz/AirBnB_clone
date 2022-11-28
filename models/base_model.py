@@ -29,6 +29,9 @@ class BaseModel:
     def __str__(self):
         """ returns a string format of the class"""
         return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
+        def save(self):
+        self.updated_at = datetime.now
+        storage.save()
 
     def to_dict(self):
         my_dict = self.__dict__.copy()
@@ -36,7 +39,3 @@ class BaseModel:
         my_dict["created_at"] = my_dict["created_at"].isoformat()
         my_dict["updated_at"] = my_dict["updated_at"].isoformat()
         return my_dict
-
-    def save(self):
-        self.updated_at = datetime.now
-        storage.save()

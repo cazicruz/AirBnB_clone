@@ -1,12 +1,11 @@
 #!/usr/bin/python3
-"""Module for FileStorage class."""
+"""A module for FileStorage class."""
 import datetime
 import json
 import os
 
 
 class FileStorage:
-
     """Class for storing and retrieving data"""
     __file_path = "file.json"
     __objects = {}
@@ -22,9 +21,9 @@ class FileStorage:
 
     def save(self):
         """ serializes __objects to the JSON file (path: __file_path)"""
-        with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
-            d = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
-            json.dump(d, f)
+        with open(FileStorage.__file_path, "w", encoding="utf-8") as x:
+            d = {i: j.to_dict() for i, j in FileStorage.__objects.items()}
+            json.dump(d, x)
 
     def classes(self):
         """Returns a dictionary of valid classes and their references"""
@@ -49,10 +48,10 @@ class FileStorage:
         """Reloads the stored objects"""
         if not os.path.isfile(FileStorage.__file_path):
             return
-        with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
-            obj_dict = json.load(f)
-            obj_dict = {k: self.classes()[v["__class__"]](**v)
-                        for k, v in obj_dict.items()}
+        with open(FileStorage.__file_path, "r", encoding="utf-8") as x:
+            obj_dict = json.load(x)
+            obj_dict = {i: self.classes()[j["__class__"]](**j)
+                        for i, j in obj_dict.items()}
             # TODO: should this overwrite or insert?
             FileStorage.__objects = obj_dict
 
@@ -92,4 +91,4 @@ class FileStorage:
                          "user_id": str,
                          "text": str}
         }
-        return attributes
+        return

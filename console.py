@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""Module for the entry point of the command interpreter."""
-
+"""A module for the entry point of the command interpreter."""
 import cmd
 from models.base_model import BaseModel
 from models import storage
@@ -9,9 +8,7 @@ import json
 
 
 class HBNBCommand(cmd.Cmd):
-
     """Class for the command interpreter."""
-
     prompt = "(hbnb) "
 
     def default(self, line):
@@ -173,7 +170,6 @@ class HBNBCommand(cmd.Cmd):
         if line == "" or line is None:
             print("** class name missing **")
             return
-
         rex = r'^(\S+)(?:\s(\S+)(?:\s(\S+)(?:\s((?:"[^"]*")|(?:(\S)+)))?)?)?'
         match = re.search(rex, line)
         classname = match.group(1)

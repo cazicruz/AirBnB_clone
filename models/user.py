@@ -17,7 +17,7 @@ class User(BaseModel):
     """
 # Attributes
 
-    email: str = ""
+    email str = ""
     password: str = ""
     first_name: str = ""
     last_name: str = ""

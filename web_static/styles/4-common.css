@@ -7,7 +7,7 @@ body {
 
 }
 .container{
-    margin: 30px 25%;
+    margin: 30px auto;
     max-width: 1000px;
     background-color: white;
     height: 70px;
